@@ -1,38 +1,59 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'order_details/update'
+
+    get 'orders/show'
+    get 'orders/update'
+
+    get 'customers/index'
+    get 'customers/show'
+    get 'customers/edit'
+    get 'customers/update'
+
+    get 'genres/index'
+    get 'genres/create'
+    get 'genres/edit'
+    get 'genres/update'
+
+    get 'itemes/index'
+    get 'itemes/new'
+    get 'itemes/create'
+    get 'itemes/show'
+    get 'itemes/edit'
+    get 'itemes/update'
+
+    get 'homes/top'
+  end
+
   namespace :public do
     get 'cart_items/index'
     get 'cart_items/update'
     get 'cart_items/destroy'
     get 'cart_items/clear'
     get 'cart_items/create'
-  end
-  namespace :public do
+
     get 'addresses/index'
     get 'addresses/edit'
     get 'addresses/create'
     get 'addresses/update'
     get 'addresses/destroy'
-  end
-  namespace :public do
+
     get 'orders/new'
     get 'orders/comfirm'
     get 'orders/complete'
     get 'orders/create'
     get 'orders/index'
     get 'orders/show'
-  end
-  namespace :public do
+
     get 'customers/show'
     get 'customers/edit'
     get 'customers/update'
     get 'customers/check'
     get 'customers/out'
-  end
-  namespace :public do
+
     get 'items/index'
     get 'items/show'
-  end
-  namespace :public do
+
     get 'homes/top'
     get 'homes/about'
   end
