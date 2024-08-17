@@ -25,3 +25,5 @@ feature-order_status_management = 注文詳細画面、注文/詳細ステータ
 【しま】
 feature-item = アイテム機能作成
 feature-genre = ジャンル系機能作成
+
+layout = レイアウト調整用
