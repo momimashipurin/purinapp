@@ -1,0 +1,27 @@
+main = メインブランチ(プラグインなどのインストールまで完了)
+develop = 最終確認用
+mvc = モデル・ビュー・コントローラ作成+ルーティング
+header_footer = 共通テンプレを作成(ログイン前は顧客と管理者同一・ログイン後はそれぞれ別のボタン)
+member = 会員登録機能作成用
+
+【みっころ】
+feature-product_listing_detail = 商品（一覧・詳細）画面
+feature-cart_items_list = カート内商品一覧画面
+feature-cart_items_function = カート内商品（追加・更新・削除機能）
+feature-order_process = 注文情報（入力・確認・完了）画面
+feature-order_confirmation = 注文確定処理
+feature-order_history = 注文履歴（一覧・詳細）画面
+
+【まいやん】
+feature-delivery_address-list = 配送先登録/一覧画面
+feature-delivery_edit = 配送先編集画面
+feature-delivery_address_function = 配送先登録編集機能
+
+【もっちー】
+feature-auth_login_logout = ログイン/ログアウト機能、トップ画面
+feature-customers_crud = 顧客一覧/詳細/編集画面、顧客情報の更新機能
+feature-order_status_management = 注文詳細画面、注文/詳細ステータスの設定
+
+【しま】
+feature-item = アイテム機能作成
+feature-genre = ジャンル系機能作成
