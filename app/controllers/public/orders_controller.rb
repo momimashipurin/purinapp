@@ -2,7 +2,7 @@ class Public::OrdersController < ApplicationController
   def new
   end
 
-  def comfirm
+  def confirm
   end
 
   def complete
