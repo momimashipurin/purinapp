@@ -44,6 +44,12 @@
         </div>
       <% end %>
     </header>
+    <main>
+      <% flash.each do |message_type, message| %>
+        <div class="flash-message <%= message_type %>"><%= message %></div>
+      <% end %>
+    </main>
+    <!--↑追加しました（byみっころ）-->
     <%= yield %>
     <footer>
       <div class="container">
