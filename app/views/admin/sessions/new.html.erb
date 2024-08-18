@@ -1,6 +1,7 @@
 <h1>管理者ログイン画面　1P</h1>
 <h2>Log in</h2>
 
+<%= form_with model: @admin, url: admin_session_path do |f| %>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
     <%= f.label :email %><br />
