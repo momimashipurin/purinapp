@@ -1,2 +1,73 @@
-<h1>商品編集画面　5P</h1>
-<p>Find me in app/views/admin/itemes/edit.html.erb</p>
+<div class='container'>
+  <div class='row'>
+    <div class="col">
+      <h1>商品編集　5P</h1>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col-sm-6 col-md-6 col-lg-6 px-5 px-sm-0 mx-auto">
+      <%= form_with model: @item, url: admin_item_path(@item), local: true do |f| %>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <label>商品画像</label>
+              </td>
+              <td>
+                <%= f.file_field :item_image, accept: "image/*" %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>商品名</label>
+              </td>
+              <td>
+                <%= f.text_field :name%>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>商品説明</label>
+              </td>
+              <td>
+                <%= f.text_area :introduction, rows: 5 %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>ジャンル</label>
+              </td>
+              <td>
+                <%= f.collection_select :genre_id, Genre.all ,:id, :name %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>税抜価格</label>
+              </td>
+              <td>
+                <%= f.text_field :price %>円
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>販売ステータス</label>
+              </td>
+              <td>
+                <%= f.radio_button :is_active, true, id: "active" %>
+                <%= f.label :is_active, "販売中", value: true, for: "active" %>
+              </td>
+              <td>
+                <%= f.radio_button :is_active, false, id: "inactive" %>
+                <%= f.label :is_active, "販売停止中", value: false, for: "inactive" %>
+              </td>
+            </tr>
+            <tr>
+              <td><%= f.submit '変更を保存' %></td>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>

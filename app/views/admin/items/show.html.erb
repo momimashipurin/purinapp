@@ -1,2 +1,54 @@
-<h1>商品詳細画面　4P</h1>
-<p>Find me in app/views/admin/itemes/show.html.erb</p>
+<div class='container'>
+  <div class='row'>
+    <div class="col">
+      <h1>商品詳細　4P</h1>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col">
+      <%= image_tag @item.get_item_image(100,100) %>
+    </div>
+    <div class="col">
+      <table>
+        <tbody>
+          <tr>
+            <td>商品名</td>
+            <td><%= @item.name %></td>
+          </tr>
+          <tr>
+            <td>商品説明</td>
+            <td><%= @item.introduction %></td>
+          </tr>
+          <tr>
+            <td>ジャンル</td>
+            <td>
+              <%= @genre.name %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              税込価格<br />
+              (税抜価格)
+            </td>
+            <td>
+              <%= number_with_delimiter(@tax_included_price.round, delimiter: ",") %>（<%= number_with_delimiter(@item.price, delimiter: ",") %>）円
+            </td>
+          </tr>
+          <tr>
+            <td>販売ステータス</td>
+            <td>
+              <% if @item.is_active == true %>
+                <p>販売中</p>
+              <% else %>
+                <p>販売停止中</p>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><%= link_to "編集する", edit_admin_item_path(@item)%></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
