@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="border-top border-left border-right p-1 text-center">
+    <strong>ジャンル検索</strong>
+  </div>
+  <div class="border p-3">
+    <% genres.each do |genre| %>
+      <p>
+        <%= genre.name %>
+      </p>
+    <% end %>
+  </div>
+</div>
