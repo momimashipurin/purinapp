@@ -1,2 +1,53 @@
-<h1>商品一覧　2P</h1>
-<p>Find me in app/views/admin/itemes/index.html.erb</p>
+<div class='container'>
+  <div class='row'>
+    <div class="col">
+      <h1>商品一覧　2P</h1>
+    </div>
+    <div class="col">
+      <h1><%= link_to "+", new_admin_item_path %></h1>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col-12">
+      <div class='table-responsive'>
+        <table class='table'>
+          <thead>
+            <tr>
+              <th>商品ID</th>
+              <th>商品名</th>
+              <th>税抜価格</th>
+              <th>ジャンル</th>
+              <th>ステータス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @items.each do |item| %>
+              <tr>
+                <td>
+                  <%= item.id %>
+                </td>
+                <td>
+                  <%= link_to admin_item_path(item.id) do %>
+                    <%= item.name %>
+                  <% end %>
+                  </td>
+                <td><%= number_with_delimiter(item.price, delimiter: ",") %></td>
+                <td>
+                  <% genre = Genre.find(item.genre_id) %>
+                  <%= genre.name %>
+      					</td>
+                <td>
+                  <% if item.is_active == true %>
+      							<p>販売中</p>
+      						<% else %>
+      							<p>販売停止中</p>
+      						<% end %>
+      					</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
