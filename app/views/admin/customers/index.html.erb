@@ -1,3 +1,42 @@
-<h1>顧客一覧画面　8P</h1>
+<h1>顧客一覧画面 8P</h1>
 <p>顧客情報を一覧で確認することができる</p>
 <p>検索結果を表示する場合は、検索条件に当てはまる顧客のみ一覧表示</p>
+
+<div>
+  <div class="offset-sm-1">
+    <h2>会員一覧</h2>
+  </div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="table-active">会員ID</th>
+        <th class="table-active">氏名</th>
+        <th class="table-active">メールアドレス</th>
+        <th class="table-active">ステータス</th>
+      </tr>
+    </thead>
+    <% @customers.each do |customer| %>
+      <tbody>
+        <tr>
+          <td class="align-middle"><%= customer.id %></td>
+          <td  class="align-middle">
+            <%= link_to admin_customer_path(customer.id) do %><!--氏名をクリック→会員詳細画面へ遷移-->
+              <%= customer.last_name %><%= customer.first_name %>
+            <% end %>
+          </td>
+          <td class="align-middle"><%= customer.email %></td>
+          <td class="align-middle">
+            <% if customer.is_active == true %><!--もし会員が有効なら（trueなら）-->
+              <p class="text-success font-weight-bold">有効</p>
+            <% else %>
+              <p class="text-secondary font-weight-bold">退会</p>
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    <% end %>
+  </table>
+</div>
+<div>
+  <%= paginate @customers %>
+</div>
