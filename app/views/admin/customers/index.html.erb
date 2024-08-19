@@ -18,7 +18,7 @@
           <td class="align-middle"><%= customer.id %></td>
           <td  class="align-middle">
             <%= link_to admin_customer_path(customer.id) do %><!--氏名をクリック→会員詳細画面へ遷移-->
-              <%= customer.last_name %><%= customer.first_name %>
+              <%= customer.last_name + customer.first_name %>
             <% end %>
           </td>
           <td class="align-middle"><%= customer.email %></td>
@@ -26,7 +26,7 @@
             <% if customer.is_active == true %><!--もし会員が有効なら（trueなら）-->
               <p class="text-success font-weight-bold">有効</p>
             <% else %>
-              <p class="text-secondary font-weight-bold">退会</p>
+              <p class="text-danger font-weight-bold">退会</p>
             <% end %>
           </td>
         </tr>
