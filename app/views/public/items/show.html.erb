@@ -13,7 +13,7 @@
       <p><%= @item.introduction %></p>
       <%  if @item.is_active == true %>
         <h4> 
-          ¥ <%= calculate_price_including_tax(@item.price) %> 
+          ¥ <%= calculate_price_including_tax(@item.price) %>
            <!--↑ヘルパーメソッドapp/helpers/application_helper.rbに記載（byみっころ）-->
           <span style="font-size: small;">(税込)</span>
           <span style="font-size: medium;">販売中</span>
