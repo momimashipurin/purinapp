@@ -1,2 +1,50 @@
-<h1>ジャンル管理画面(一覧・追加を兼ねる)　6P</h1>
-<p>Find me in app/views/admin/genres/index.html.erb</p>
+<div class='container'>
+  <div class='row'>
+    <div class="col">
+      <h1>ジャンル一覧・追加　6P</h1>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col">
+      <%= render "side" ,genres: @genres %>
+    </div>
+    <div class="col">
+      <%= form_with model: @genre, url: admin_genres_path, local: true do |f| %>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <label>ジャンル名</label>
+              </td>
+              <td>
+                <%= f.text_field :name, placeholder:"ジャンル名" %>
+              </td>
+              <td><%= f.submit '新規登録' %></td>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col">
+      <table class='table'>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @genres.each do |genre| %>
+            <tr>
+              <td>
+                <%= genre.name %>
+              </td>
+              <td><%= link_to "編集する", edit_admin_genre_path(genre)%></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
