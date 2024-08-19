@@ -1,1 +1,78 @@
-<h1>カート内商品一覧画面(数量変更・カート削除の要素を含む)　７P</h1>
+<h1>カート内商品一覧画面 ７P</h1>
+
+<div class="container">
+    
+  <div class="row">
+    <div class="col-12">
+      <strong><h3>ショッピングカート</h3></strong>
+      
+      <% if @cart_items_grouped.empty? %>
+        <div class="alert alert-info text-center">カートには商品がありません。</div>
+      <% else %>
+        <%= button_to "カートを空にする", clear_cart_items_path, method: :delete, data: { confirm: 'カートを空にして本当によろしいですか？' }, class: "pull-right btn btn-danger" %>
+      <% end %>
+      
+    </div>
+      
+    <table class="table table-bordered col-10">
+      <thead>
+        <tr>
+          <th class="col-3">商品名</th> 
+          <th class="col-2">単価（税込）</th>
+          <th class="col-1">数量</th>
+          <th lass="col-1">小計</th>
+          <th lass="col-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @cart_items_grouped.each do |cart_item| %>
+        <tr>
+          <td class="col-3">
+            <%= image_tag cart_item.item.item_image %>
+            <%= cart_item.item.name %>
+          </td>
+          <td class="col-2"><%= calculate_price_including_tax(cart_item.item.price) %></td>
+          <td class="col-1">
+          <%= form_with model: cart_item, url: cart_item_path(id: cart_item.id), method: :patch, local: true do |f| %>
+            <%= f.number_field :amount, min:1, max:9, step:1 %>
+            <%= f.submit "変更", class: "btn btn-success" %>
+          <% end %>
+          </td> 
+          <td class="col-1">
+             <%= calculate_subtotal(cart_item) %>
+          </td>
+          <td class="col-1">
+            <%= link_to "削除する", cart_item_path(cart_item.id), method: :DELETE, class: "btn btn-danger" %>
+          </td>
+        </tr>
+          
+      <% end %>
+      </tbody>
+    </table>
+    
+    <div class="col-4">
+      <table class="table table-bordered">
+        <tr>
+          <td class="col-2">合計金額</td>
+          <td class="col-2">
+            <p><%= calculate_total(@cart_items_grouped) %></p>
+          </td>
+        </tr>
+        <div>
+          <%= link_to "買い物を続ける", items_path, class: "btn btn-primary" %>
+        </div>
+      </table>
+    </div>
+    
+    <div class="row">
+      <div class="text-center">
+        <% if @cart_items.count == 0  %>
+          <%= link_to "情報入力に進む", cart_items_path, class: "btn btn-success" %>
+        <% else %>
+		    	<%= link_to "情報入力に進む", new_order_path, class: "btn btn-success" %>
+		    <% end %>
+      </div>
+    </div>
+  </div>
+    
+</div>

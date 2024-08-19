@@ -19,7 +19,7 @@
         <div>
           <p><%= item.name %></p>
           <% if item.is_active == true%>
-            <p>¥<%= item.price %></p>
+            <p>¥<%= format_price(item.price) %></p>
           <% else %>
             <p>販売停止中</p>
           <% end %>
