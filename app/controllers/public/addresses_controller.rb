@@ -23,13 +23,17 @@ class Public::AddressesController < ApplicationController
   end
 
   def edit
-    shipping_address = ShippingAddress.find(params[:id])
+    @shipping_address = ShippingAddress.find(params[:id])
   end
 
   def update
-    shipping_address = ShippingAddress.find(params[:id])
-    shipping_address.update(shipping_address_params)
-    redirect_to addresses_path
+    @shipping_address = ShippingAddress.find(params[:id])
+    if @shipping_address.update(shipping_address_params)
+      redirect_to addresses_path
+    else
+      flash.now[:danger] = "登録の更新に失敗しました。更新内容に不備があります。"
+      render :edit
+    end
   end
 
   def destroy
