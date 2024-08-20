@@ -59,7 +59,7 @@ class Public::CartItemsController < ApplicationController
     redirect_to cart_items_path
   end
 
-  def clear　#商品全部削除
+  def clear #商品全部削除
     current_customer.cart_items.destroy_all
     flash[:notice] = 'カートの中身を空にしました。'
     redirect_to request.referer #cart_items_path # 同じ画面にリダイレクト
