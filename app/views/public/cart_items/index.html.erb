@@ -1,23 +1,23 @@
 <h1>カート内商品一覧画面 ７P</h1>
 
 <div class="container">
-    
+
   <div class="row">
     <div class="col-12">
       <strong><h3>ショッピングカート</h3></strong>
-      
+
       <% if @cart_items_grouped.empty? %>
         <div class="alert alert-info text-center">カートには商品がありません。</div>
       <% else %>
         <%= link_to "カートを空にする", clear_cart_items_path, method: :delete, data: { confirm: 'カートを空にして本当によろしいですか？' }, class: "pull-right btn btn-danger" %>
       <% end %>
-      
+
     </div>
-      
+
     <table class="table table-bordered col-10">
       <thead>
         <tr>
-          <th class="col-3">商品名</th> 
+          <th class="col-3">商品名</th>
           <th class="col-2">単価（税込）</th>
           <th class="col-1">数量</th>
           <th lass="col-1">小計</th>
@@ -39,7 +39,7 @@
             <%= f.number_field :amount, min:1, max:9, step:1 %>
             <%= f.submit "変更", class: "btn btn-success" %>
           <% end %>
-          </td> 
+          </td>
           <td class="col-1">
              <%= calculate_subtotal(cart_item) %>
           </td>
@@ -47,11 +47,11 @@
             <%= link_to "削除する", cart_item_path(cart_item.id), method: :DELETE, class: "btn btn-danger" %>
           </td>
         </tr>
-          
+
       <% end %>
       </tbody>
     </table>
-    
+
     <div class="col-4">
       <table class="table table-bordered">
         <tr>
@@ -65,7 +65,7 @@
         </div>
       </table>
     </div>
-    
+
     <div class="row">
       <div class="text-center">
         <% if @cart_items.count == 0  %>
@@ -76,5 +76,5 @@
       </div>
     </div>
   </div>
-    
+
 </div>
