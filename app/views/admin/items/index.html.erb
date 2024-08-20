@@ -4,14 +4,14 @@
       <h1>商品一覧　2P</h1>
     </div>
     <div class="col">
-      <h1><%= link_to "+", new_admin_item_path %></h1>
+      <h1><%= link_to "+", new_admin_item_path, class: "btn  btn-light rounded-circle border" %></h1>
     </div>
   </div>
   <div class='row'>
-    <div class="col-12">
+    <div class="col-md-10 offset-md-1">
       <div class='table-responsive'>
-        <table class='table'>
-          <thead>
+        <table class='table table-hover'>
+          <thead class="thead-light">
             <tr>
               <th>商品ID</th>
               <th>商品名</th>
@@ -21,7 +21,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @items.each do |item| %>
+            <% @item_page.each do |item| %>
               <tr>
                 <td>
                   <%= item.id %>
@@ -47,6 +47,7 @@
             <% end %>
           </tbody>
         </table>
+        <%= paginate @item_page %>
       </div>
     </div>
   </div>
