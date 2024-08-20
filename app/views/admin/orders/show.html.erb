@@ -1,3 +1,101 @@
-<h1>注文詳細画面(ステータス編集を兼ねる)　13P</h1>
+<!--注文詳細画面(ステータス編集を兼ねる)　13P-->
 <p>注文の詳細（注文商品や個数など）を確認できる</p>
 <p>注文ステータス、制作ステータスを変更できる</p>
+
+<div class="container">
+  <div class="row my-3">
+    <div>
+      <h3>注文履歴詳細</h3>
+    </div>
+    <table class="table table-borderless"><!--購入者に関する情報-->
+      <%# @order.each do |order| %>
+        <tr>
+          <td>購入者</td>
+          <td>
+            <!--注文データ入り次第、admin_customer_pathの後ろに(order.id)を付け足す-->
+            <%= link_to admin_customer_path do %><!--氏名をクリック→会員詳細画面へ遷移-->
+              <%#= order.name %>苗字名前（リンクつける）
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>注文日</td>
+          <td>2021/11/12</td>
+        </tr>
+        <tr>
+          <td>配送先</td>
+          <td>〒[郵便番号] [住所]<br>
+              氏名
+          </td>
+        </tr>
+        <tr>
+          <td>支払い方法</td>
+          <td>銀行振込</td>
+        </tr>
+        <tr>
+          <td>注文ステータス</td>
+          <td>入金待ち　更新ボタン</td>
+        </tr>
+      <%# end %>
+    </table>
+
+    <table class="table table-bordered"><!--購入した商品に関する情報-->
+      <thead>
+        <tr>
+          <th class="table-active">商品名</th>
+          <th class="table-active">単価（税込）</th>
+          <th class="table-active">数量</th>
+          <th class="table-active">小計</th>
+          <th class="table-active">制作ステータス</th>
+          <th></th>
+        </tr>
+      </thead>
+      <% @items.each do |item| %>
+        <tbody>
+          <tr>
+            <td class="align-middle"><%= item.name %></td>
+            <td class="align-middle"><%= item.price %></td>
+            <td class="align-middle">0</td>
+            <td class="align-middle">00</td>
+            <td class="align-middle">着手不可</td>
+            <td class="align-middle">更新ボタン</td>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+    <table><!--注文にかかった金額-->
+      <tr>
+        <th>商品合計</th>
+        <td>1200円</td>
+        <!--商品小計：商品単価*個数-->
+      </tr>
+      <tr>
+        <th>送料</th>
+        <td>800円</td>
+      </tr>
+      <tr>
+        <th>請求額合計</th>
+        <th>2000円</th>
+        <!--商品小計*1.08+送料-->
+      </tr>
+    </table>
+
+
+    <!--<table>-->
+      <!--<tr>-->
+        <!--<td>会員ステータス</td>-->
+        <!--<td>-->
+          <%# if @customer.is_active == true %><!--もし会員が有効なら（trueなら）-->
+            <!--<p class="text-success font-weight-bold" style="vertical-align: middle;">有効</p>-->
+          <%# else %>
+            <!--<p class="text-danger font-weight-bold">退会</p>-->
+          <%# end %>
+        <!--</td>-->
+      <!--</tr>-->
+    <!--</table>-->
+    <!--<div class="row mb-2">-->
+      <%#= link_to '編集する', edit_admin_customer_path(@customer), class: "btn btn-sm btn-success"%>
+      <%#= link_to '注文履歴一覧を見る', admin_path, class: "btn btn-sm btn-primary"%>
+    <!--</div>-->
+  </div>
+</div>
