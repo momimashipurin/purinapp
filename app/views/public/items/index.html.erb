@@ -1,32 +1,35 @@
 <h1>商品一覧　５P</h1>
+
 <div class="container">
   
+
   <div class="row">
-    <div>
-	   <!--<%#= render '', genres: @genres %>　←表示必要であればレンダー先(ジャンル一覧)確定後追加（byみっころ）-->
+    
+    <div class="col-3">
+       <%= render 'admin/genres/side', genres: @genres %>
     </div>
-    <div>
+    
+    <div class="col-9">
       <h2>商品一覧(全<%= @items_all.count %>件)</h2>
-    </div>
-  </div>
-  <div>
-    <% @items.each do |item|%>
-    <div>
+      <% @items.each do |item|%>
       <div>
-        <%= link_to item_path(item) do%>
-          <p class="img-wrap"><%= image_tag item.item_image %>></p>
-        <% end %>
         <div>
-          <p><%= item.name %></p>
-          <% if item.is_active == true%>
-            <p>¥<%= format_price(item.price) %></p>
-          <% else %>
-            <p>販売停止中</p>
+          <%= link_to item_path(item) do%>
+            <p class="img-wrap"><%= image_tag item.item_image %>></p>
           <% end %>
+          <div>
+            <p><%= item.name %></p>
+            <% if item.is_active == true%>
+              <p>¥<%= format_price(item.price) %></p>
+            <% else %>
+              <p>販売停止中</p>
+            <% end %>
+          </div>
         </div>
       </div>
+      <% end %>
     </div>
-    <% end %>
+
   </div>
   
   <%= paginate @items %>
