@@ -9,7 +9,7 @@
       <% if @cart_items_grouped.empty? %>
         <div class="alert alert-info text-center">カートには商品がありません。</div>
       <% else %>
-        <%= button_to "カートを空にする", clear_cart_items_path, method: :delete, data: { confirm: 'カートを空にして本当によろしいですか？' }, class: "pull-right btn btn-danger" %>
+        <%= link_to "カートを空にする", clear_cart_items_path, method: :delete, data: { confirm: 'カートを空にして本当によろしいですか？' }, class: "pull-right btn btn-danger" %>
       <% end %>
       
     </div>
@@ -28,7 +28,9 @@
       <% @cart_items_grouped.each do |cart_item| %>
         <tr>
           <td class="col-3">
-            <%= image_tag cart_item.item.item_image %>
+            <%= link_to item_path(cart_item.item) do %>
+              <%= image_tag cart_item.item.item_image %>
+            <% end %>
             <%= cart_item.item.name %>
           </td>
           <td class="col-2"><%= calculate_price_including_tax(cart_item.item.price) %></td>
