@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include ActionView::Helpers::NumberHelper
     
   def calculate_price_including_tax(price) #税込価格表示用メソッド設定（byみっころ）
     tax_rate = 1.08
@@ -25,4 +26,17 @@ module ApplicationHelper
     end
     calculate_price_including_tax(total)
   end
+  
+  def calculate_total_with_shipping_fee(cart_items, shipping_fee) #追加（byみっころ）
+    total = cart_items.sum do |cart_item|
+      unit_price = cart_item.item.price
+      quantity = cart_item.amount
+      unit_price * quantity
+    end
+    
+    total_with_shipping = total + shipping_fee #追加（byみっころ）
+
+    calculate_price_including_tax(total_with_shipping) #追加（byみっころ）
+  end
+
 end
