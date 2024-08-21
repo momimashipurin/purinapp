@@ -1,6 +1,11 @@
 class Admin::HomesController < ApplicationController
   def top
-    #if @orders >= 10
-    @orders = Order.all.page(params[:page]).per(10) #ページネーション
+    @orders = Order.page(params[:page]).per(10)
+  end
+
+  private
+
+  def order_params
+    params.require(:order).permit(:payment_type, :postal_code, :address, :name, :shipping_cost, :total_payment)
   end
 end
