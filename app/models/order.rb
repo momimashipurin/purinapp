@@ -6,7 +6,7 @@ class Order < ApplicationRecord
   validates :payment_type, presence: true
   validates :shipping_cost, presence: true
   validates :address, length: { in: 1..50 }
-  validates :postal_code, format: { with: VALID_POSTAL_CODE_REGEX }
+  validates :postal_code, presence: true, format: { with: VALID_POSTAL_CODE_REGEX }
   validates :name, length: { in: 1..50 }
 
   has_many :order_details, dependent: :destroy

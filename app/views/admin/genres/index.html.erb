@@ -6,9 +6,6 @@
   </div>
   <div class='row'>
     <div class="col">
-      <%= render "side" ,genres: @genres %>
-    </div>
-    <div class="col">
       <%= form_with model: @genre, url: admin_genres_path, local: true do |f| %>
         <table>
           <tbody>

@@ -31,3 +31,29 @@
 
 en:
   hello: "Hello world"
+  
+# 以下追記（byみっころ）
+  
+  activerecord:
+    attributes:
+      order:
+        payment_type:
+          0: "クレジットカード"
+          1: "銀行振込"
+        status:
+          0: "入金待ち"
+          1: "入金確認"
+          2: "製作中"
+          3: "発送準備中"
+          4: "発送済み"
+  helpers:
+    order:
+      payment_types:
+        0: "クレジットカード"
+        1: "銀行振込"
+      statuses:
+        0: "入金待ち"
+        1: "入金確認"
+        2: "製作中"
+        3: "発送準備中"
+        4: "発送済み"
