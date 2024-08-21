@@ -86,6 +86,10 @@ class Public::OrdersController < ApplicationController
     @order.shipping_cost = params[:shipping_cost].to_i
     
     @order.total_payment = calculate_total(current_customer.cart_items)
+    
+    total_items_price = calculate_total(current_customer.cart_items).delete(',').to_i # 合計金額の計算
+    @order.total_payment = total_items_price + @order.shipping_cost
+    
     @order.save!
     current_customer.cart_items.each do |cart_item| # 注文詳細を作成
       @order.order_details.create!(
@@ -103,11 +107,16 @@ class Public::OrdersController < ApplicationController
   end
 
   def index
-    @orders = current_customer.orders.order(created_at: :desc)
+    @orders = Order.where(customer_id: current_customer.id).order(created_at: :desc)
+    def status_i18n
+      I18n.t("activerecord.attributes.order.statuses.#{status}")
+    end
+    @order = Order.page(params[:order]).per(10)
   end
 
   def show
     @order = Order.find(params[:id])
+    @order_details= OrderDetail.where(order_id: @order.id)
   end
 
   private
