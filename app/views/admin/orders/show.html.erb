@@ -1,45 +1,43 @@
-<!--注文詳細画面(ステータス編集を兼ねる)　13P-->
-<p>注文の詳細（注文商品や個数など）を確認できる</p>
-<p>注文ステータス、制作ステータスを変更できる</p>
-
+<!--注文詳細画面(ステータス編集を兼ねる) 13P-->
 <div class="container">
   <div class="row my-3">
+
     <div>
       <h3>注文履歴詳細</h3>
     </div>
     <table class="table table-borderless"><!--購入者に関する情報-->
-      <%# @order.each do |order| %>
-        <tr>
-          <td>購入者</td>
-          <td>
-            <!--注文データ入り次第、admin_customer_pathの後ろに(order.id)を付け足す-->
-            <%= link_to admin_customer_path do %><!--氏名をクリック→会員詳細画面へ遷移-->
-              <%#= @order.customer.last_name + @order.customer.first_name %>苗字名前（リンクつける）
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td>注文日</td>
-          <td>2021/11/12</td>
-        </tr>
-        <tr>
-          <td>配送先</td>
-          <td>〒<%#= order.postal_code %>[郵便番号] <%#= order.address %>[住所]<br>
-              <%#= order.name %>氏名
-          </td>
-        </tr>
-        <tr>
-          <td>支払い方法</td>
-          <td><%#= order.payment_type %>銀行振込</td>
-        </tr>
-        <tr>
-          <%#= order.order_status %>
-          <td>注文ステータス</td>
-          <td>入金待ち　更新ボタン</td>
-        </tr>
-      <%# end %>
+      <tr>
+        <td>購入者</td>
+        <td>
+          <%= link_to admin_customer_path(@order.customer.id) do %><!--氏名をクリック→会員詳細画面へ遷移-->
+            <%= @order.customer.last_name + @order.customer.first_name %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>注文日</td>
+        <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+      </tr>
+      <tr>
+        <td>配送先</td>
+        <td>〒<%= @order.postal_code %> <%= @order.address %><br>
+            <%= @order.name %>
+        </td>
+      </tr>
+      <tr>
+        <td>支払い方法</td>
+        <td><%= @order.payment_type %></td>
+      </tr>
+      <tr>
+        <td>注文ステータス</td>
+        <td>
+          <%= form_with model: @order, url: admin_order_path(@order), method: :patch do |f| %>
+            <%= f.select :status, Order.statuses.keys.map %>
+            <%= f.submit '更新', class:"btn btn-outline-success" %><!--更新ボタン-->
+          <% end %>
+        </td>
+      </tr>
     </table>
-
 
     <table class="table table-bordered"><!--購入した商品に関する情報-->
       <thead>
@@ -52,62 +50,45 @@
           <th></th>
         </tr>
       </thead>
-      <%# @items.each do |item| %>
+      <% @order.order_details.each do |order_detail| %>
         <tbody>
           <tr>
-            <td class="align-middle"><%#= item.name %></td>
-            <td class="align-middle"><%#= item.price %></td>
-            <td class="align-middle">0</td>
-            <td class="align-middle">00</td>
-            <td class="align-middle">着手不可</td>
-            <td class="align-middle">更新ボタン</td>
-          </tr>
-          <tr><!--お試し表示-->
-            <% @order.order_details.each do |order_detail| %>
-              <td>商品名：<%= order_detail.item.name %></td>
-              <td>単価（税込）：<%= @intax %></td>
-              <td>数量：<%= order_detail.amount %></td>
-              <td>小計：<%= @sum %></td>
-              <td>制作ステータス：<%= order_detail.item.sales_status %></td>
+            <td><%= order_detail.item.name %></td><!--OrderDetailモデルを通してItemモデルからname情報を取得-->
+            <td><%= calculate_price_including_tax(order_detail.item.price) %></td><!--ヘルパーメソッドapp/helpers/application_helper.rbから呼び出し-->
+            <td><%= order_detail.amount %></td>
+            <td><%= calculate_subtotal_order_detail(order_detail) %></td><!--ヘルパーメソッドapp/helpers/application_helper.rbから呼び出し-->
+            <%= form_with model: order_detail, url: admin_order_detail_path(order_detail), method: :patch do |f| %>
+              <td>
+                <%= f.select :making_status, OrderDetail.making_statuses.keys.map %>
+              </td>
+              <td>
+                <%= f.submit '更新', class:"btn btn-outline-success" %><!--更新ボタン-->
+              </td>
             <% end %>
           </tr>
         </tbody>
-      <%# end %>
+      <% end %>
     </table>
-    
-    
-    
+
     <table><!--注文にかかった金額-->
       <tr>
         <th>商品合計</th>
-        <td><%#= total_price %>円1200円</td>
+        <td><%= calculate_total_order_detail(@order.order_details) %>円</td><!--ヘルパーメソッドapp/helpers/application_helper.rbから呼び出し-->
       </tr>
       <tr>
         <th>送料</th>
-        <td><%#= @order.shipping_cost %>円800円</td>
+        <td><%= @order.shipping_cost %>円</td>
       </tr>
       <tr>
         <th>請求額合計</th>
-        <th><%#= @order.total_payment %>円2000円</th>
+        <th><%= calculate_sum_order_detail(@order) %>円</th><!--ヘルパーメソッドapp/helpers/application_helper.rbから呼び出し-->
       </tr>
     </table>
 
-
-    <!--<table>-->
-      <!--<tr>-->
-        <!--<td>会員ステータス</td>-->
-        <!--<td>-->
-          <%# if @customer.is_active == true %><!--もし会員が有効なら（trueなら）-->
-            <!--<p class="text-success font-weight-bold" style="vertical-align: middle;">有効</p>-->
-          <%# else %>
-            <!--<p class="text-danger font-weight-bold">退会</p>-->
-          <%# end %>
-        <!--</td>-->
-      <!--</tr>-->
-    <!--</table>-->
-    <!--<div class="row mb-2">-->
-      <%#= link_to '編集する', edit_admin_customer_path(@customer), class: "btn btn-sm btn-success"%>
-      <%#= link_to '注文履歴一覧を見る', admin_path, class: "btn btn-sm btn-primary"%>
-    <!--</div>-->
   </div>
 </div>
+
+
+<!--
+・ステータスの紐づけ
+-->
