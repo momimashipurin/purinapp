@@ -7,21 +7,17 @@ class Admin::OrdersController < ApplicationController
 
   def update
     @order = Order.find(params[:id])
-    @order.update(order_params)
-    redirect_to admin_order_path(@order)
-    # render :show
+    @order_details = @order.order_details
 
-    #制作ステータスが～～に変更されたら、注文ステータスを～～に変更
-    #商品ごとのステータスでさらに制限
-
-
-
-    # @order = Order.find(params[:id])
-    # @order_details = @order.order_details
-    # if @order.update(order_params)
-    #   @order_details.update_all(making_status: "制作待ち") if @order.status == "入金確認"
-    # end
-    # redirect_to admin_order_path(@order)
+    if @order.update(order_params)
+      if @order.status == "入金確認"
+        #注文ステータスが「入金確認」になったら、自動で全ての制作ステータスが「製作待ち」になる
+        @order_details.update_all(making_status: OrderDetail.making_statuses[:製作待ち])
+      end
+      redirect_to admin_order_path(@order), notice: '更新が成功しました'
+    else
+      redirect_to admin_path#追加設定
+    end
   end
 
   private
