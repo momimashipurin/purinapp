@@ -18,12 +18,12 @@ class Public::OrdersController < ApplicationController
     
     @order = Order.new(order_params)
     
-    if @order.payment_type.nil? # 支払い方法の確認
+    if @order.payment_type.nil? # 支払方法の確認
       flash[:alert] = "支払い方法を選択してください。"
       redirect_to new_order_path and return
     end
   
-    if @order.payment_type == "クレジットカード" # 支払い方法の処理
+    if @order.payment_type == "クレジットカード" # 支払方法の処理
       session[:selected_pay_method] = "クレジットカード"
       @selected_pay = 0
     else
@@ -71,7 +71,7 @@ class Public::OrdersController < ApplicationController
     @cart_items_price = @cart_items.sum { |item| item.item.price * item.amount }
     @total_price = @cart_items_price + @shipping_fee
 
-    @order.shipping_cost = @shipping_fee # 確認画面で表示するためにセッションに保存
+    @order.shipping_cost = @shipping_fee # 確認画面で表示するために保存
     @order.total_payment = @total_price
     session[:order] = @order.attributes
   end
@@ -91,7 +91,7 @@ class Public::OrdersController < ApplicationController
     @order.total_payment = total_items_price + @order.shipping_cost
     
     @order.save!
-    current_customer.cart_items.each do |cart_item| # 注文詳細を作成
+    current_customer.cart_items.each do |cart_item|
       @order.order_details.create!(
         item: cart_item.item,
         price: cart_item.item.price,
@@ -107,11 +107,11 @@ class Public::OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.where(customer_id: current_customer.id).order(created_at: :desc)
+    @orders = current_customer.orders.order(created_at: :desc).page(params[:page]).per(10)
     def status_i18n
       I18n.t("activerecord.attributes.order.statuses.#{status}")
     end
-    @order = Order.page(params[:order]).per(10)
+    
   end
 
   def show
