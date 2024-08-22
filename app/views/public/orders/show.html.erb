@@ -58,7 +58,7 @@
           <td><%= order_detail.item.name %></td>
           <td><%= number_to_currency(order_detail.item.price * 1.08, unit: "", delimiter: ",", precision: 0) %></td>
           <td><%= order_detail.amount %></td>
-          <td><%= calculate_total(@order.order_details) %></td>
+          <td><%= number_to_currency(calculate_price_including_tax(order_detail.item.price).to_i * order_detail.amount.to_i, unit: "", delimiter: ",", precision: 0) %></td>
         </tr>
       <% end %>
     </table>
