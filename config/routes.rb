@@ -24,12 +24,13 @@ Rails.application.routes.draw do
         get 'complete'
       end
     end
-    resources :customers, only: [:show, :edit, :update] do
-      collection do
-        get 'check'
-        get 'out'
-      end
-    end
+
+    get '/customers/my_page' => 'customers#show'
+    get '/customers/information/edit' => 'customers#edit'
+    patch '/customers/information' => 'customers#update'
+    get '/customers/check' => 'customers#check'
+    get '/customers/out' => 'customers#out'
+
     resources :items, only: [:index, :show]
   end
 
