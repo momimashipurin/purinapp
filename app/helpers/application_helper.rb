@@ -19,6 +19,8 @@ module ApplicationHelper
   end
   
   def calculate_total(cart_items) #合計表示用メソッド設定（byみっころ）
+    return 0 unless cart_items.present? && cart_items.any? #追記（byみっころ）
+  
     total = cart_items.sum do |cart_item|
       unit_price = cart_item.item.price
       quantity = cart_item.amount
