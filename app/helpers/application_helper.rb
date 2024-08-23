@@ -54,12 +54,13 @@ module ApplicationHelper
       quantity = order_detail.amount
       unit_price * quantity
     end
-    (total * 1.08).floor
+    (total * 1.03).floor
+    formatted_total = number_to_currency((total * 1.08).floor, unit: "", delimiter: ",", precision: 0)#数字にカンマを追加し、小数点以下を表示せず、円マークを付けない
+    formatted_total
   end
 
   def calculate_sum_order_detail(order) #注文詳細ページでの請求額合計表示用メソッド設定（byもっちー）
     order_sum = calculate_total_order_detail(order.order_details) + order.shipping_cost
-    # order_sum
     number_to_currency(order_sum, unit: "", delimiter: ",", precision: 0) #カンマ付き
   end
 
