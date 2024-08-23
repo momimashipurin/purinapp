@@ -1,29 +1,42 @@
-<!--管理者トップページ(注文履歴一覧) 11P-->
-<div>
-  <div class="offset-sm-1">
-    <h3>注文履歴一覧</h3>
+<div class='container'>
+  <div class='row justify-content-md-center align-items-center my-4'>
+    <div class="col-md-5 text-center">
+      <h4 class="d-inline bg-secondary text-start text-white">　注文履歴一覧　</h4>
+    </div>
   </div>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th class="table-active">購入日時</th>
-        <th class="table-active">購入者</th>
-        <th class="table-active">注文個数</th>
-      </tr>
-    </thead>
-    <% @orders.each do |order| %> <!--注文テーブルのデータ数だけ繰り返す-->
-      <tbody>
-        <tr>
-          <td>
-            <%= link_to admin_order_path(order.id) do %><!--日時をクリック→注文詳細画面へ遷移-->
-              <%= order.created_at.strftime("%Y/%m/%d %H:%M") %>
+  <div class='row my-4'>
+    <div class="col-md-9 mx-auto">
+      <div class='table-responsive'>
+        <table class='table table-hover'>
+          <thead class="thead-light font-weight-bold">
+            <tr>
+              <th>購入日時</th>
+              <th>購入者</th>
+              <th>注文個数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @orders.each do |order| %> <!--注文テーブルのデータ数だけ繰り返す-->
+              <tr>
+                <td>
+                  <%= link_to admin_order_path(order.id) do %><!--日時をクリック→注文詳細画面へ遷移-->
+                    <%= order.created_at.strftime("%Y/%m/%d %H:%M") %>
+                  <% end %>
+                </td>
+                <td><%= order.customer.last_name + order.customer.first_name %></td>
+                <td><%= order.order_details.sum(:amount) %></td><!--amountカラムの合計値を取得-->
+              </tr>
             <% end %>
-          </td>
-          <td><%= order.customer.last_name + order.customer.first_name %></td>
-          <td><%= order.order_details.sum(:amount) %></td><!--amountカラムの合計値を取得-->
-        </tr>
-      </tbody>
-    <% end %>
-  </table>
-  <%= paginate @orders %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col">
+      <div style="display: flex; justify-content: center;">
+        <%= paginate @orders, class: "pagination" %>
+      </div>
+    </div>
+  </div>
 </div>
