@@ -1,27 +1,27 @@
-<h1>商品詳細　６P</h1>
 <div class="container">
   
   <div class="row">
-    <div>
-	  <%= render 'admin/genres/side', genres: @genres %>
+    <div class="col-3">
+      <%= render 'admin/genres/side', genres: @genres %>
     </div>
+    
     <div>
-      <%= image_tag @item.get_item_image(200,150) %>
+      <%= image_tag @item.get_item_image(300,200), class: "mr-4" %>
     </div>
-    <div>
+    
+    <div class="col-5">
       <h4><strong><%= @item.name %></strong></h4>
-      <p><%= @item.introduction %></p>
+      <p class="mb-5"><%= @item.introduction %></p>
       <%  if @item.is_active == true %>
-        <h4> 
+        <h4 class="mb-5"> 
           ¥ <%= calculate_price_including_tax(@item.price) %>
           <span style="font-size: small;">(税込)</span>
-          <span style="font-size: medium;">販売中</span>
         </h4>
         
         <%= form_with(model: @cart_item, url: cart_items_path, local: true) do |f| %>
           <%= f.select :amount, [['1個', 1], ['2個', 2], ['3個', 3], ['4個', 4], ['5個', 5], ['6個', 6], ['7個', 7], ['8個', 8], ['9個', 9]], { prompt: "個数選択" } %>
           <%= f.hidden_field :item_id, value: @item.id %>　
-          <%= f.submit "カートに入れる", class: "btn btn-primary" %>
+          <%= f.submit "カートに入れる", class: "btn btn-success" %>
         <% end %>
         
       <% else %>
@@ -31,4 +31,3 @@
   </div>
   
 </div>
-
