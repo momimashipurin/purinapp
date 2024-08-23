@@ -1,39 +1,50 @@
-<!--顧客一覧画面 8P-->
-<div>
-  <div class="offset-sm-1">
-    <h2>会員一覧</h2>
+<div class='container'>
+  <div class='row justify-content-md-center align-items-center my-4'>
+    <div class="col-md-5 text-center">
+      <h4 class="d-inline bg-secondary text-start text-white">　会員一覧　</h4>
+    </div>
   </div>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th class="table-active">会員ID</th>
-        <th class="table-active">氏名</th>
-        <th class="table-active">メールアドレス</th>
-        <th class="table-active">ステータス</th>
-      </tr>
-    </thead>
-    <% @customers.each do |customer| %>
-      <tbody>
-        <tr>
-          <td class="align-middle"><%= customer.id %></td>
-          <td  class="align-middle">
-            <%= link_to admin_customer_path(customer.id) do %><!--氏名をクリック→会員詳細画面へ遷移-->
-              <%= customer.last_name + customer.first_name %>
+  <div class='row my-4'>
+    <div class="col-md-9 mx-auto">
+      <div class='table-responsive'>
+        <table class='table table-hover'>
+          <thead class="thead-light font-weight-bold">
+            <tr>
+              <th>会員ID</th>
+              <th>氏名</th>
+              <th>メールアドレス</th>
+              <th>ステータス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @customers.each do |customer| %>
+              <tr>
+                <td class="align-middle"><%= customer.id %></td>
+                <td  class="align-middle">
+                  <%= link_to admin_customer_path(customer.id) do %><!--氏名をクリック→会員詳細画面へ遷移-->
+                    <%= customer.last_name + customer.first_name %>
+                  <% end %>
+                </td>
+                <td class="align-middle"><%= customer.email %></td>
+                <td class="align-middle">
+                  <% if customer.is_active == true %><!--もし会員が有効なら（trueなら）-->
+                    <p class="text-success font-weight-bold">有効</p>
+                  <% else %>
+                    <p class="text-danger font-weight-bold">退会</p>
+                  <% end %>
+                </td>
+              </tr>
             <% end %>
-          </td>
-          <td class="align-middle"><%= customer.email %></td>
-          <td class="align-middle">
-            <% if customer.is_active == true %><!--もし会員が有効なら（trueなら）-->
-              <p class="text-success font-weight-bold">有効</p>
-            <% else %>
-              <p class="text-danger font-weight-bold">退会</p>
-            <% end %>
-          </td>
-        </tr>
-      </tbody>
-    <% end %>
-  </table>
-</div>
-<div>
-  <%= paginate @customers %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col">
+      <div style="display: flex; justify-content: center;">
+        <%= paginate @customers, class: "pagination" %>
+      </div>
+    </div>
+  </div>
 </div>

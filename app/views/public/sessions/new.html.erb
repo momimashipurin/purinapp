@@ -1,5 +1,6 @@
-<h1>顧客ログイン画面　4P</h1>
-<h2>Log in</h2>
+<h2>ログイン</h2>
+
+<p>会員の方はコチラからログイン</p>
 
 <%= form_with model: @customer, url: customer_session_path do |f| %>
   <div class="field">
@@ -24,4 +25,5 @@
   </div>
 <% end %>
 
-<%= render "public/shared/links" %>
+<p>会員登録がお済みでない方</p>
+<%= render "public/shared/links" %>から新規登録を行ってください。
