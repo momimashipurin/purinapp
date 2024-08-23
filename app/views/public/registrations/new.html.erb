@@ -1,55 +1,63 @@
-<h1>顧客の会員登録画面　３P　←最後に消してね</h1>
-<h2>新規会員登録</h2>
-
-<%= form_with model: @customer, url: customer_registration_path do |f| %>
+<div class="container mt-5 mb-5">
   <%= render "public/shared/error_messages", resource: resource %>
+  <div class="row pb-3">
+    <div class="col-3 offset-1">
+      <h2>新規会員登録</h2>
+    </div>
+  </div>
+  
+  <%= form_with model: @customer, url: customer_registration_path do |f| %>
+    <div class="row pb-2">
+      <div class="col-1 offset-1"><%= f.label :"名前" %></div>
+      <div class="col-2 text-right p-0"><%= f.label :"(姓)" %></div>
+      <div class="col-2"><%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", placeholder:"令和"  %></div>
+      <div class="col-1 text-right p-0"><%= f.label :"(名)" %></div>
+      <div class="col-2"><%= f.text_field :first_name, autocomplete: "first_name", placeholder:"道子"  %></div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-1 offset-1"><%= f.label :"フリガナ" %></div>
+      <div class="col-2 text-right p-0"><%= f.label :"(セイ)" %></div>
+      <div class="col-2"><%= f.text_field :last_name_kana, autocomplete: "last_name_kana", placeholder:"レイワ"  %></div>
+      <div class="col-1 text-right p-0"><%= f.label :"(メイ)" %></div>
+      <div class="col-2"><%= f.text_field :first_name_kana, autocomplete: "first_name_kana", placeholder:"ミチコ"  %></div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-3 offset-1"><%= f.label :email %></div>
+      <div class="col-3"><%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "sample@example.com" %></div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-3 offset-1"><%= f.label :"郵便番号(ハイフンなし)" %></div>
+      <div class="col-3"><%= f.text_field :postal_code, autocomplete: "postal_code", placeholder:"0000000"  %></div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-3 offset-1"><%= f.label :"住所" %></div>
+      <div class="col-3"><%= f.text_field :address, autocomplete: "address", placeholder:"東京都渋谷区代々木神園町0-0"  %></div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-3 offset-1"><%= f.label :"電話番号(ハイフンなし)" %></div>
+      <div class="col-3"><%= f.text_field :telephone_number, autocomplete: "telephone_number", placeholder:"0000000000"  %></div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-3 offset-1">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> 文字以上)</em>
+        <% end %>
+      </div>
+      <div class="col-3"><%= f.password_field :password, autocomplete: "new-password" %></div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-3 offset-1"><%= f.label :password_confirmation %></div>
+      <div class="col-3"><%= f.password_field :password_confirmation, autocomplete: "new-password" %></div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-5  offset-4"><%= f.submit "新規登録", class: "btn btn-success"%></div>
+    </div>
+  <% end %>
+    <div class="row pb-3">
+      <div class="col-5 offset-1">
+        <h2>既に登録済みの方</h2>
+      </div>
+    </div>
+      <div class="col-6 offset-1"><%= render "public/shared/links" %>からログインしてください</div>
 
-  <div class="field">
-    <%= f.label :"名前" %>
-    <%= f.label :"(姓)" %>
-    <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", placeholder:"令和"  %>
-    <%= f.label :"(名)" %>
-    <%= f.text_field :first_name, autocomplete: "first_name", placeholder:"道子"  %>
-  </div>
-  <div class="field">
-    <%= f.label :"フリガナ" %>
-    <%= f.label :"(セイ)" %>
-    <%= f.text_field :last_name_kana, autocomplete: "last_name_kana", placeholder:"レイワ"  %>
-    <%= f.label :"(メイ)" %>
-    <%= f.text_field :first_name_kana, autocomplete: "first_name_kana", placeholder:"ミチコ"  %>
-  </div>
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "sample@example.com" %>
-  </div>
-  <div class="field">
-    <%= f.label :"郵便番号(ハイフンなし)" %>
-    <%= f.text_field :postal_code, autocomplete: "postal_code", placeholder:"0000000"  %>
-  </div>
-  <div class="field">
-    <%= f.label :"住所" %>
-    <%= f.text_field :address, autocomplete: "address", placeholder:"東京都渋谷区代々木神園町0-0"  %>
-  </div>
-  <div class="field">
-    <%= f.label :"電話番号(ハイフンなし)" %>
-    <%= f.text_field :telephone_number, autocomplete: "telephone_number", placeholder:"0000000000"  %>
-  </div>
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %>
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-  <div class="actions">
-    <%= f.submit "新規登録" %>
-  </div>
-<% end %>
-
-<p>既に登録済みの方</p>
-
-<%= render "public/shared/links" %>からログインしてください
