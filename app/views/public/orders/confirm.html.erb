@@ -24,7 +24,7 @@
                 </td>
                 <td style="border: 1px solid black;"><%= number_to_currency(cart_item.item.price * 1.08, unit: "", delimiter: ",", precision: 0) %></td>
                 <td style="border: 1px solid black;"><%= cart_item.amount %></td>
-                <td style="border: 1px solid black;"><%= number_to_currency(cart_item.item.price * cart_item.amount * 1.08, unit: "", delimiter: ",", precision: 0) %></td> <!-- 修正点: 小計を表示 -->
+                <td style="border: 1px solid black;"><%= number_to_currency((cart_item.item.price * 1.08).round * cart_item.amount, unit: "", delimiter: ",", precision: 0) %></td>
               </tr>
             <% end %>
             </tbody>
@@ -68,15 +68,17 @@
             <%= @selected_address %>
           </div>
           
-          <div class="text-center mt-5">
-            <%= form_with model: Order.new, url: orders_path, method: :post, local:true do %>
-              <%= hidden_field_tag :payment_type, @selected_pay %>
-              <%= hidden_field_tag :postal_code, @order.postal_code %>
-              <%= hidden_field_tag :address, @order.address %>
-              <%= hidden_field_tag :name, @order.name %>
-              <%= hidden_field_tag :shipping_cost, @shipping_fee %>
-              <%= submit_tag "注文を確定する", class: "btn btn-success" %>
-            <% end %>
+          <div class="col-8 offset-2 mt-5">
+            <div class="text-center">
+              <%= form_with model: Order.new, url: orders_path, method: :post, local:true do %>
+                <%= hidden_field_tag :payment_type, @selected_pay %>
+                <%= hidden_field_tag :postal_code, @order.postal_code %>
+                <%= hidden_field_tag :address, @order.address %>
+                <%= hidden_field_tag :name, @order.name %>
+                <%= hidden_field_tag :shipping_cost, @shipping_fee %>
+                <%= submit_tag "注文を確定する", class: "btn btn-success" %>
+              <% end %>
+            </div>
           </div>
 
       </div>
