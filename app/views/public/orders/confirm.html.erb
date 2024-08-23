@@ -1,2 +1,78 @@
-<h1>注文情報確認画面 9P</h1>
-<p>Find me in app/views/public/orders/comfirm.html.erb</p>
+<h1>9P</h1>
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-12">
+      <h5>注文情報確認</h5>
+            
+      <div class="col-8">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>商品名</th>
+              <th>単価(税込)</th>
+              <th>数量</th>
+              <th>小計</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @cart_items.each do |cart_item| %>
+            <tr>
+              <td>
+                <%= image_tag cart_item.item.get_item_image(100, 100) %>
+                <strong><%= cart_item.item.name %></strong>
+              </td>
+              <td><%= number_to_currency(cart_item.item.price * 1.08, unit: "", delimiter: ",", precision: 0) %></td>
+              <td><strong><%= cart_item.amount %></strong></td>
+              <td><%= number_to_currency(cart_item.item.price * cart_item.amount * 1.08, unit: "", delimiter: ",", precision: 0) %></td> <!-- 修正点: 小計を表示 -->
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+          
+        <div class="col-4">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td>送料</td>
+                <td><%= number_to_currency(@shipping_fee, unit: "", delimiter: ",", precision: 0) %></td>
+              </tr>
+              <tr>
+                <td>商品合計</td>
+                <td><%= calculate_total(@cart_items) %></td>
+              </tr>
+              <tr>
+                <td>請求金額</td>
+                <td><%= number_to_currency(calculate_total(@cart_items).delete(',').to_i + @shipping_fee, unit: "", delimiter: ",", precision: 0) %></td>
+              </tr>
+            </thead>
+          </table>
+
+          <h6>支払い方法</h6>
+            <% if session[:selected_pay_method] == "クレジットカード" %>
+              クレジットカード
+            <% else %>
+              銀行振込
+            <% end %>
+
+          <h6>お届け先</h6>
+          <%= @selected_address %>
+
+          <%= form_with model: Order.new, url: orders_path, method: :post, local:true do %>
+          
+            <%= hidden_field_tag :payment_type, @selected_pay %>
+            
+            <%= hidden_field_tag :postal_code, @order.postal_code %>
+            <%= hidden_field_tag :address, @order.address %>
+            <%= hidden_field_tag :name, @order.name %>
+            <%= hidden_field_tag :shipping_cost, @shipping_fee %>
+            
+            <%= submit_tag "注文を確定する", class: "btn btn-success" %>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

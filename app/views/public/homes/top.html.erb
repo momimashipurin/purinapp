@@ -1,1 +1,43 @@
-<h1>顧客側トップページ　１P</h1>
+<!--<h1>顧客側トップページ　１P</h1>-->
+
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-2 pt-5">
+      <%= render 'admin/genres/side', genres: @genres %>
+    </div>
+    <div class="col-4 offset pt-5" style="text-align: center;">
+      <h1 class= "top-text">WELCOME</h1>
+      　<h3 class= "top-text">ーようこそ、ながのCAKEへ</h3><br>
+        <h4 class= "top-text">
+          このサイトは、ケーキ販売のECサイトになります。<br><br>
+          会員でない方も商品の閲覧はできますが、<br><br>
+          購入には会員登録が必要になります。
+        </h4>
+    </div>
+    <div class="col-4 py-5">
+     <img class="top-img" src="assets/30084502_s.jpg" height="400">
+    </div>
+  </div>
+  
+  <div class="row justify-content-center">
+    <h3><strong>新着商品</strong></h3>
+  </div>
+  <div class="row justify-content-center">
+    <% @items.first(4).each do |item|%>
+      <div class="col-2 p-4 text-center">
+        <%= link_to item_path(item) do %>
+          <div class="new-image"><%= image_tag(item.get_item_image(300, 300)) %></div>
+          <p class= "top-text"><%= item.name %></p>
+        <% end %>
+        <% if item.is_active == true%>
+          <p>¥<%= format_price(item.price) %></p>   <!--税抜価格表示用メソッド設定,pp/helpers/items_helper.rb-->
+        <% else %>
+          <p>販売停止中</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row justify-content-center">
+    <%= link_to " VIEW MORE ▶", items_path ,class: "btn btn-outline-secondary" %>
+  </div>
+</div>

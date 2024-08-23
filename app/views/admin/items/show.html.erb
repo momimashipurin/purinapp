@@ -1,27 +1,31 @@
 <div class='container'>
-  <div class='row'>
-    <div class="col">
-      <h1>商品詳細　4P</h1>
+  <div class='row my-4'>
+    <div class="col-md-8 mx-auto">
+      <h4 class="d-inline bg-secondary text-white">　商品詳細　</h4>
     </div>
   </div>
-  <div class='row'>
-    <div class="col">
-      <%= image_tag @item.get_item_image(100,100) %>
+  <div class='row my-4'>
+    <div class="col-md-4 d-flex justify-content-center align-items-center">
+      <%= image_tag @item.get_item_image(300,150) %>
     </div>
-    <div class="col">
+    <div class="col-md-8">
       <table>
         <tbody>
           <tr>
             <td>商品名</td>
-            <td><%= @item.name %></td>
+            <td style="padding-left: 40px;">
+              <%= @item.name %>
+            </td>
           </tr>
           <tr>
             <td>商品説明</td>
-            <td><%= @item.introduction %></td>
+            <td style="padding-left: 40px;">
+              <%= @item.introduction %>
+            </td>
           </tr>
           <tr>
             <td>ジャンル</td>
-            <td>
+            <td style="padding-left: 40px;">
               <%= @genre.name %>
             </td>
           </tr>
@@ -30,22 +34,22 @@
               税込価格<br />
               (税抜価格)
             </td>
-            <td>
+            <td style="padding-left: 40px;">
               <%= number_with_delimiter(@tax_included_price.round, delimiter: ",") %>（<%= number_with_delimiter(@item.price, delimiter: ",") %>）円
             </td>
           </tr>
           <tr>
             <td>販売ステータス</td>
-            <td>
+            <td class="font-weight-bold", style="padding-left: 40px;">
               <% if @item.is_active == true %>
-                <p>販売中</p>
+                <div class="text-success">販売中</div>
               <% else %>
-                <p>販売停止中</p>
+                <div class="text-secondary">販売停止中</div>
               <% end %>
             </td>
           </tr>
           <tr>
-            <td><%= link_to "編集する", edit_admin_item_path(@item)%></td>
+            <td><%= link_to "編集する", edit_admin_item_path(@item), class: "btn btn-success", style: "font-weight: bold;" %></td>
           </tr>
         </tbody>
       </table>

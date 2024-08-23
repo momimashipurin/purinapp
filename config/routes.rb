@@ -17,18 +17,20 @@ Rails.application.routes.draw do
       delete 'clear', on: :collection
     end
     resources :addresses, only: [:index, :edit, :create, :update, :destroy]
+    post '/orders/confirm' => 'orders#confirm', as: "confirm_orders"
+    get '/orders/confirm' => 'orders#confirm'
     resources :orders, only: [:new, :create, :index, :show] do
       collection do
-        get 'confirm'
         get 'complete'
       end
     end
-    resources :customers, only: [:show, :edit, :update] do
-      collection do
-        get 'check'
-        get 'out'
-      end
-    end
+
+    get '/customers/my_page' => 'customers#show'
+    get '/customers/information/edit' => 'customers#edit'
+    patch '/customers/information' => 'customers#update'
+    get '/customers/check' => 'customers#check'
+    get '/customers/out' => 'customers#out'
+
     resources :items, only: [:index, :show]
   end
 

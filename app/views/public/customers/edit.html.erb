@@ -1,55 +1,42 @@
 <div class="container">
-<h1>顧客の登録情報編集画面 １３P</h1>
-<p>Find me in app/views/public/customers/edit.html.erb</p>
-<h2>会員情報編集</h2>
+  <div class="row pt-3">
+    <h2>会員情報編集</h2>
+  </div>
 
 <%= render "public/shared/error_messages", resource: @customer %>
-<%= form_with model: @customer do |f| %>
-    <table>
-     <tr>
-      <td>
-        <%= f.label :"氏名" %>
-        <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name"  %>
-        <%= f.text_field :first_name, autocomplete: "first_name"  %>
-      </td>
-     </tr>
-     <tr>
-      <td>
-        <%= f.label :"フリガナ" %>
-        <%= f.text_field :last_name_kana, autocomplete: "last_name_kana"  %>
-        <%= f.text_field :first_name_kana, autocomplete: "first_name_kana"  %>
-      </td>
-     </tr>
-     <tr>
-      <td>
-        <%= f.label :"郵便番号" %>
-        <%= f.text_field :postal_code, autocomplete: "postal_code" %>
-      </td>
-     </tr>
-     <tr>
-      <td>
-        <%= f.label :"住所" %>
-        <%= f.text_field :address, autocomplete: "address" ,size: "40x20"  %>
-      </td>
-     </tr>
-     <tr>
-      <td>
-        <%= f.label :"電話番号" %>
-        <%= f.text_field :telephone_number, autocomplete: "telephone_number"  %>
-      </td>
-     </tr>
-     <tr>
-      <td>
-        <%= f.label :"メールアドレス" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-      </td>
-     </tr>
-     <tr>
-      <td>
-        <%= f.submit "編集内容を保存", class: "btn btn-success" %>
-        <%=link_to "退会する", check_customers_path, class: "btn btn-danger" %>
-      </td>
-     </tr>
+  <div class= "row">
+  <%= form_with model: @customer ,url: "/customers/information" do |f| %>
+    <table class="table table-borderless">
+      <tr>
+        <td><%= f.label :"氏名" %></td>
+        <td><%= f.text_field :last_name, autofocus: true, autocomplete: "last_name"  %>
+            <%= f.text_field :first_name, autocomplete: "first_name"  %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :"フリガナ" %></td>
+        <td><%= f.text_field :last_name_kana, autocomplete: "last_name_kana"  %>
+            <%= f.text_field :first_name_kana, autocomplete: "first_name_kana"  %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :"郵便番号" %></td>
+        <td><%= f.text_field :postal_code, autocomplete: "postal_code" %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :"住所" %></td>
+        <td><%= f.text_field :address, autocomplete: "address" ,size: "40x20"  %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :"電話番号" %></td>
+        <td><%= f.text_field :telephone_number, autocomplete: "telephone_number"  %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :"メールアドレス" %>
+        <td><%= f.email_field :email, autofocus: true, autocomplete: "email" %></td>
+      </tr>
+        <td></td>
+        <td><%= f.submit "編集内容を保存", class: "btn btn-success" %>
+        <%=link_to "退会する", customers_check_path, class: "btn btn-danger" %></td>
     </table>
-<% end %>
+  <% end %>
+  </div>
 </div>
