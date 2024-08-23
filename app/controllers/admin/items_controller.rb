@@ -9,8 +9,14 @@ class Admin::ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    @item.save
-    redirect_to admin_item_path(@item.id)
+    if @item.save
+      flash[:notice] = "新しい商品を登録しました"
+      redirect_to admin_item_path(@item.id)
+    else
+      @item = Item.new
+      flash[:notice] = "商品の登録ができませんでした"
+      render :new
+    end
   end
 
   def show
@@ -26,8 +32,14 @@ class Admin::ItemsController < ApplicationController
 
   def update
     item = Item.find(params[:id])
-    item.update(item_params)
-    redirect_to admin_item_path(item.id)
+    if item.update(item_params)
+      flash[:notice] = "商品情報が更新されました"
+      redirect_to admin_item_path(item.id)
+    else
+      @item = Item.find(params[:id])
+      flash[:notice] = "商品の更新ができませんでした"
+      render :edit
+    end
   end
 
   private
