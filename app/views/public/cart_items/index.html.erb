@@ -1,79 +1,79 @@
-<h1>カート内商品一覧画面 ７P</h1>
-
 <div class="container">
 
   <div class="row">
     <div class="col-12">
-      <strong><h3>ショッピングカート</h3></strong>
+      <strong>
+        <h4 style="background-color: #dcdcdc; display: inline-block; padding: 5px 10px;">ショッピングカート</h4>
+      </strong>
 
       <% if @cart_items_grouped.empty? %>
         <div class="alert alert-info text-center">カートには商品がありません。</div>
       <% else %>
-        <%= link_to "カートを空にする", clear_cart_items_path, method: :delete, data: { confirm: 'カートを空にして本当によろしいですか？' }, class: "pull-right btn btn-danger" %>
+        <div class="d-flex justify-content-end mb-3" style="width: 100%;">
+          <%= link_to "カートを空にする", clear_cart_items_path, method: :delete, data: { confirm: 'カートを空にして本当によろしいですか？' }, class: "btn btn-danger" %>
+        </div>
       <% end %>
 
     </div>
 
-    <table class="table table-bordered col-10">
+    <table class="table table-bordered" style="border-color: black; border: 1px solid black; width: 100%;">
       <thead>
-        <tr>
-          <th class="col-3">商品名</th>
-          <th class="col-2">単価（税込）</th>
-          <th class="col-1">数量</th>
-          <th lass="col-1">小計</th>
-          <th lass="col-1"></th>
+        <tr style="background-color: #dcdcdc;">
+          <th class="col-3" style="border: 1px solid black;">商品名</th>
+          <th class="col-2" style="border: 1px solid black;">単価（税込）</th>
+          <th class="col-1" style="border: 1px solid black;">数量</th>
+          <th lass="col-1" style="border: 1px solid black;">小計</th>
+          <th lass="col-1" style="border: 1px solid black;"></th>
         </tr>
       </thead>
       <tbody>
       <% @cart_items_grouped.each do |cart_item| %>
         <tr>
-          <td class="col-3">
+          <td class="col-3" style="border: 1px solid black;">
             <%= link_to item_path(cart_item.item) do %>
-              <%= image_tag cart_item.item.get_item_image(200, 150) %>
+              <%= image_tag cart_item.item.get_item_image(100, 70) %>
             <% end %>
             <%= cart_item.item.name %>
           </td>
-          <td class="col-2"><%= calculate_price_including_tax(cart_item.item.price) %></td>
-          <td class="col-1">
+          <td class="col-2" style="border: 1px solid black;"><%= calculate_price_including_tax(cart_item.item.price) %></td>
+           <td class="col-1" style="border: 1px solid black;">
           <%= form_with model: cart_item, url: cart_item_path(id: cart_item.id), method: :patch, local: true do |f| %>
             <%= f.number_field :amount, min:1, max:9, step:1 %>
             <%= f.submit "変更", class: "btn btn-success" %>
           <% end %>
           </td>
-          <td class="col-1">
+          <td class="col-1" style="border: 1px solid black;">
              <%= calculate_subtotal(cart_item) %>
           </td>
-          <td class="col-1">
+          <td class="col-1" style="border: 1px solid black;">
             <%= link_to "削除する", cart_item_path(cart_item.id), method: :DELETE, class: "btn btn-danger" %>
           </td>
         </tr>
-
       <% end %>
       </tbody>
     </table>
-
-    <div class="col-4">
-      <table class="table table-bordered">
-        <tr>
-          <td class="col-2">合計金額</td>
-          <td class="col-2">
-            <p><%= calculate_total(@cart_items_grouped) %></p>
-          </td>
-        </tr>
-        <div>
-          <%= link_to "買い物を続ける", root_path, class: "btn btn-primary" %>
-        </div>
-      </table>
+    
+    <div class="d-flex justify-content-between align-items-center col-12 mt-4">
+      <%= link_to "買い物を続ける", root_path, class: "btn btn-primary" %>
+         
+      <div class="col-4 ml-auto">
+        <table class="table table-bordered" style="width: auto;">
+          <tr>
+            <td class="col-2" style="border: 1px solid black; background-color: #dcdcdc; vertical-align: middle;">合計金額</td>
+            <td class="col-2" style="border: 1px solid black; vertical-align: middle;">
+              <span style="margin: 0;"><%= calculate_total(@cart_items_grouped) %></span>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
 
-    <div class="row">
-      <div class="text-center">
-        <% if @cart_items.count == 0  %>
-          <%= link_to "情報入力に進む", cart_items_path, class: "btn btn-success" %>
-        <% else %>
-		    	<%= link_to "情報入力に進む", new_order_path, class: "btn btn-success" %>
-		    <% end %>
-      </div>
+    <div class="col-12 mt-4 d-flex justify-content-center">
+      <% if @cart_items.count == 0  %>
+        <%= link_to "情報入力に進む", cart_items_path, class: "btn btn-success float-right" %>
+      <% else %>
+	    	<%= link_to "情報入力に進む", new_order_path, class: "btn btn-success" %>
+	    <% end %>
     </div>
   </div>
 
