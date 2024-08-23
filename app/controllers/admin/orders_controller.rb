@@ -9,9 +9,8 @@ class Admin::OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order_details = @order.order_details
 
-    if @order.update(order_params)
+    if @order.update(order_params)  #注文ステータスが「入金確認」になったら、自動で全ての制作ステータスが「製作待ち」になる
       if @order.status == "入金確認"
-        #注文ステータスが「入金確認」になったら、自動で全ての制作ステータスが「製作待ち」になる
         @order_details.update_all(making_status: OrderDetail.making_statuses[:製作待ち])
       end
       redirect_to admin_order_path(@order), notice: '更新が成功しました'
