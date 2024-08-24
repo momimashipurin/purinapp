@@ -1,5 +1,5 @@
 class Public::ItemsController < ApplicationController
-  
+
   def index
     @items = Item.page(params[:page]).per(8)
     @items_all = Item.all
@@ -11,5 +11,5 @@ class Public::ItemsController < ApplicationController
     @cart_item = CartItem.new
     @genres = Genre.all
   end
-  
+
 end

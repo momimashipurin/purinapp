@@ -26,7 +26,7 @@ feature-order_status_management = 注文詳細画面、注文/詳細ステータ
 feature-item = アイテム機能作成
 feature-genre = ジャンル系機能作成
 URL = URL修正
+restrictions = アクセス制限設定
 
-
-test1 = テスト１回目用
-layout = レイアウト調整用
+test1 = テスト1回目用
+test2 = テスト2回目用
