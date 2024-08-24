@@ -31,12 +31,12 @@
         <tr>
           <td class="col-3" style="border: 1px solid black;">
             <%= link_to item_path(cart_item.item) do %>
-              <%= image_tag cart_item.item.get_item_image(100, 70) %>
+              <%= image_tag cart_item.item.get_item_image(50, 50) %>
             <% end %>
             <%= cart_item.item.name %>
           </td>
           <td class="col-2" style="border: 1px solid black;"><%= calculate_price_including_tax(cart_item.item.price) %></td>
-           <td class="col-1" style="border: 1px solid black;">
+           <td class="col-2" style="border: 1px solid black;">
           <%= form_with model: cart_item, url: cart_item_path(id: cart_item.id), method: :patch, local: true do |f| %>
             <%= f.number_field :amount, min:1, max:9, step:1 %>
             <%= f.submit "変更", class: "btn btn-success" %>
@@ -52,10 +52,10 @@
       <% end %>
       </tbody>
     </table>
-    
+
     <div class="d-flex justify-content-between align-items-center col-12 mt-4">
       <%= link_to "買い物を続ける", root_path, class: "btn btn-primary" %>
-         
+
       <div class="col-4 ml-auto">
         <table class="table table-bordered" style="width: auto;">
           <tr>

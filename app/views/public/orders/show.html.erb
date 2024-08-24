@@ -12,9 +12,9 @@
       </tr>
       <tr>
         <th style="background-color: #dcdcdc; border: 1px solid black;">配送先</th>
-          <td style="border: 1px solid black;">
-            <%= session[:selected_address].gsub("　", "<br>").html_safe %>
-          </td>
+        <td style="border: 1px solid black;">〒<%= @order.postal_code %> <%= @order.address %><br>
+          &emsp;<%= @order.name %>
+        </td>
       </tr>
       <tr>
         <th style="background-color: #dcdcdc; border: 1px solid black;">支払方法</th>
