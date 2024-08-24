@@ -1,87 +1,94 @@
 <div class="container">
   <div class="row">
-
     <div class="col-12">
       <h4 style="background-color: #dcdcdc; display: inline-block; padding: 5px 10px;">注文情報確認</h4>
-      
-      <div class="row">
-        <div class="col-8">
-          <table class="table table-bordered">
-            <thead>
-              <tr style="background-color: #dcdcdc;">
-                <th style="border: 1px solid black;">商品名</th>
-                <th style="border: 1px solid black;">単価(税込)</th>
-                <th style="border: 1px solid black;">数量</th>
-                <th style="border: 1px solid black;">小計</th>
-              </tr>
-            </thead>
-            <tbody>
-            <% @cart_items.each do |cart_item| %>
-              <tr>
-                <td style="border: 1px solid black;">
-                  <%= image_tag cart_item.item.get_item_image(100, 100) %>
-                  <strong><%= cart_item.item.name %></strong>
-                </td>
-                <td style="border: 1px solid black;"><%= number_to_currency(cart_item.item.price * 1.08, unit: "", delimiter: ",", precision: 0) %></td>
-                <td style="border: 1px solid black;"><%= cart_item.amount %></td>
-                <td style="border: 1px solid black;"><%= number_to_currency((cart_item.item.price * 1.08).round * cart_item.amount, unit: "", delimiter: ",", precision: 0) %></td>
-              </tr>
-            <% end %>
-            </tbody>
-          </table>
-        </div>
-            
-        <div class="col-4">
-          <table class="table table-bordered" >
-            <thead>
-              <tr>
-                <th style="background-color: #dcdcdc; border: 1px solid black;">送料</th>
-                <td style="border: 1px solid black;"><%= number_to_currency(@shipping_fee, unit: "", delimiter: ",", precision: 0) %></td>
-              </tr>
-              <tr>
-                <th style="background-color: #dcdcdc; border: 1px solid black;">商品合計</th>
-                <td style="border: 1px solid black;"><%= calculate_total(@cart_items) %></td>
-              </tr>
-              <tr>
-                <th style="background-color: #dcdcdc; border: 1px solid black;">請求金額</th>
-                <td style="border: 1px solid black;"><%= number_to_currency(calculate_total(@cart_items).delete(',').to_i + @shipping_fee, unit: "", delimiter: ",", precision: 0) %></td>
-              </tr>
-            </thead>
-          </table>
-        </div>
+    </div>
+  </div>
 
-          <h6><strong>支払方法</strong></h6>
-          <div style="margin-left: 1em;">
-            <% if session[:selected_pay_method] == "クレジットカード" %>
-              クレジットカード
-            <% else %>
-              銀行振込
-            <% end %>
-          </div>
-          
-          &emsp;&emsp;&emsp;
-          <br><br>
-            
-          <h6><strong>お届け先</strong></h6>
-          <div style="margin-left: 1em;">
-          <span>〒</span>
-            <%= @selected_address %>
-          </div>
-          
-          <div class="col-8 offset-2 mt-5">
-            <div class="text-center">
-              <%= form_with model: Order.new, url: orders_path, method: :post, local:true do %>
-                <%= hidden_field_tag :payment_type, @selected_pay %>
-                <%= hidden_field_tag :postal_code, @order.postal_code %>
-                <%= hidden_field_tag :address, @order.address %>
-                <%= hidden_field_tag :name, @order.name %>
-                <%= hidden_field_tag :shipping_cost, @shipping_fee %>
-                <%= submit_tag "注文を確定する", class: "btn btn-success" %>
-              <% end %>
-            </div>
-          </div>
+  <div class="row">
+    <div class="col-8">
+      <table class="table table-bordered">
+        <thead>
+          <tr style="background-color: #dcdcdc;">
+            <th style="border: 1px solid black;">商品名</th>
+            <th style="border: 1px solid black;">単価(税込)</th>
+            <th style="border: 1px solid black;">数量</th>
+            <th style="border: 1px solid black;">小計</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @cart_items.each do |cart_item| %>
+          <tr>
+            <td style="border: 1px solid black;">
+              <%= image_tag cart_item.item.get_item_image(100, 100) %>
+              <strong><%= cart_item.item.name %></strong>
+            </td>
+            <td style="border: 1px solid black;"><%= number_to_currency(cart_item.item.price * 1.08, unit: "", delimiter: ",", precision: 0) %></td>
+            <td style="border: 1px solid black;"><%= cart_item.amount %></td>
+            <td style="border: 1px solid black;"><%= number_to_currency((cart_item.item.price * 1.08).round * cart_item.amount, unit: "", delimiter: ",", precision: 0) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
 
+    <div class="col-4">
+      <table class="table table-bordered" >
+        <thead>
+          <tr>
+            <th style="background-color: #dcdcdc; border: 1px solid black;">送料</th>
+            <td style="border: 1px solid black;"><%= number_to_currency(@shipping_fee, unit: "", delimiter: ",", precision: 0) %></td>
+          </tr>
+          <tr>
+            <th style="background-color: #dcdcdc; border: 1px solid black;">商品合計</th>
+            <td style="border: 1px solid black;"><%= calculate_total(@cart_items) %></td>
+          </tr>
+          <tr>
+            <th style="background-color: #dcdcdc; border: 1px solid black;">請求金額</th>
+            <td style="border: 1px solid black;"><%= number_to_currency(calculate_total(@cart_items).delete(',').to_i + @shipping_fee, unit: "", delimiter: ",", precision: 0) %></td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8">
+      <h6><strong>支払方法</strong></h6>
+      <div style="margin-left: 1em;">
+        <% if session[:selected_pay_method] == "クレジットカード" %>
+          クレジットカード
+        <% else %>
+          銀行振込
+        <% end %>
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-8">
+      <h6><strong>お届け先</strong></h6>
+      <div style="margin-left: 1em;">
+        <td>〒<%= @order.postal_code %> <%= @order.address %><br>
+              <%= @order.name %>
+        </td>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8 offset-2 mt-5">
+      <div class="text-center">
+        <%= form_with model: Order.new, url: orders_path, method: :post, local:true do %>
+          <%= hidden_field_tag :payment_type, @selected_pay %>
+          <%= hidden_field_tag :postal_code, @order.postal_code %>
+          <%= hidden_field_tag :address, @order.address %>
+          <%= hidden_field_tag :name, @order.name %>
+          <%= hidden_field_tag :shipping_cost, @shipping_fee %>
+          <%= submit_tag "注文を確定する", class: "btn btn-success" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
 </div>
