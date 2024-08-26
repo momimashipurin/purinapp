@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    
+    <div class="col-12">
+      <h4 class="mb-4" style="background-color: #dcdcdc; display: inline-block; padding: 5px 10px;"><strong>注文履歴一覧</strong></h4>
+      <table class="table table-bordered">
+        
+        <tr>
+          <th style="background-color: #dcdcdc; border: 1px solid black;">注文日</th>
+          <th style="background-color: #dcdcdc; border: 1px solid black;">配送先</th>
+          <th style="background-color: #dcdcdc; border: 1px solid black;">注文商品</th>
+          <th style="background-color: #dcdcdc; border: 1px solid black;">支払金額</th>
+          <th style="background-color: #dcdcdc; border: 1px solid black;">ステータス</th>
+          <th style="background-color: #dcdcdc; border: 1px solid black;">注文詳細</th>
+        </tr>
+        
+        <% @orders.each do |order| %>
+          <tr>
+            <td style="border: 1px solid black;"><%= order.created_at.strftime("%Y/%m/%d") %></td>
+            <td style="border: 1px solid black;">
+              〒<%= order.postal_code %><br>
+              <%= order.address %><br>
+              <%= order.customer.last_name %> <%= order.customer.first_name %>
+            </td>
+            <td style="border: 1px solid black;">
+              <ul class="list-unstyled">
+                <% order.order_details.each do |order_detail| %>
+                  <li><%= order_detail.item.name %></li>
+                <% end %>
+              </ul>
+            </td>
+            <td style="border: 1px solid black;"><%= number_to_currency(order.total_payment, unit: "", delimiter: ",", precision: 0) %>円</td>
+            <td style="border: 1px solid black;"><%= order.status %></td>
+            <td style="border: 1px solid black;"><%= link_to "表示する", order_path(order), class: "btn btn-primary"%></td>
+          </tr>
+        <% end %>
+        
+      </table>
+      <div class="d-flex justify-content-center mt-4">
+        <%= paginate @orders %>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div class='container'>
+  <div class='row my-4'>
+    <div class="col-md-8 mx-auto">
+      <h4 class="d-inline bg-secondary text-white">　商品編集　</h4>
+    </div>
+  </div>
+  <div class='row my-4'>
+    <div class="col-md-6 mx-auto">
+      <%= form_with model: @item, url: admin_item_path(@item), local: true do |f| %>
+        <table>
+          <tbody>
+            <tr>
+              <td style="padding-right: 20px;">
+                <label>商品画像</label>
+              </td>
+              <td class="d-flex">
+                <%= f.file_field :item_image, accept: "image/*" %>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-right: 20px;">
+                <label>商品名</label>
+              </td>
+              <td class="d-flex">
+                <%= f.text_field :name, style: "width: 100%;" %>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-right: 20px;">
+                <label>商品説明</label>
+              </td>
+              <td class="d-flex">
+                <%= f.text_area :introduction, rows: 5, style: "width: 100%;" %>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-right: 20px;">
+                <label>ジャンル</label>
+              </td>
+              <td class="d-flex">
+                <%= f.collection_select :genre_id, Genre.all ,:id, :name %>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-right: 20px;">
+                <label>税抜価格</label>
+              </td>
+              <td class="d-flex">
+                <%= f.text_field :price, style: "width: 90%;" %>円
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-right: 20px;">
+                <label>販売ステータス</label>
+              </td>
+              <td>
+                <%= f.radio_button :is_active, true, id: "active" %>
+                <%= f.label :is_active, "販売中", value: true, for: "active" %>
+                <%= f.radio_button :is_active, false, id: "inactive" %>
+                <%= f.label :is_active, "販売停止中", value: false, for: "inactive" %>
+              </td>
+            </tr>
+            <tr>
+              <td><%= f.submit '変更を保存', class: "btn btn-success", style: "font-weight: bold;" %></td>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>

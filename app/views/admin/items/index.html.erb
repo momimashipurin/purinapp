@@ -1,0 +1,60 @@
+<div class='container'>
+  <div class='row justify-content-md-center align-items-center my-4'>
+    <div class="col-md-5 text-center">
+      <h4 class="d-inline bg-secondary text-start text-white">　商品一覧　</h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <h1><%= link_to "+", new_admin_item_path, class: "btn btn-light rounded-circle border" %></h1>
+    </div>
+  </div>
+  <div class='row my-4'>
+    <div class="col-md-9 mx-auto">
+      <div class='table-responsive'>
+        <table class='table table-hover'>
+          <thead class="thead-light font-weight-bold">
+            <tr>
+              <th>商品ID</th>
+              <th>商品名</th>
+              <th>税抜価格</th>
+              <th>ジャンル</th>
+              <th>ステータス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @items.each do |item| %>
+              <tr>
+                <td>
+                  <%= item.id %>
+                </td>
+                <td>
+                  <%= link_to admin_item_path(item.id), style: "color: black; text-decoration: underline;" do %>
+                    <%= item.name %>
+                  <% end %>
+                  </td>
+                <td><%= number_with_delimiter(item.price, delimiter: ",") %></td>
+                <td>
+                  <% genre = Genre.find(item.genre_id) %>
+                  <%= genre.name %>
+                </td>
+                <td class="font-weight-bold">
+                  <% if item.is_active == true %>
+                   <p class="text-success">販売中</p>
+                  <% else %>
+                    <p class="text-secondary">販売停止中</p>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col">
+      <div style="display: flex; justify-content: center;">
+        <%= paginate @items, class: "pagination" %>
+      </div>
+    </div>
+  </div>
+</div>

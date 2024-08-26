@@ -13,3 +13,29 @@
  *= require_tree .
  *= require_self
  */
+ .wf-mplus1p { font-family: "M PLUS 1p"; }
+
+header {
+  overflow: hidden; /* 基本の高さを設定 */
+  padding: 20px 0; /* 上下に20pxの余白を追加 */
+}
+
+
+.logo a,
+.wf-mplus1p a {
+  /*font-family: 'Comic Sans MS', cursive; */
+  font-size: 36px; /* フォントサイズの設定 */
+  color: #fff; /* 文字色の設定（白色） */
+  text-align: center; /* 中央揃え */
+  background-color: dimgray; /* 背景色の設定（ダークグレー） */
+  padding: 15px; /* 内部余白の設定 */
+  border-radius: 8px; /* 角の丸みの設定 */
+  display: inline-block; /* インラインブロックにすることで中央揃えが効く */
+  border: 2px solid #fff;
+}
+
+.nav-link {
+  color: white;
+  font-size: 20px
+}
+

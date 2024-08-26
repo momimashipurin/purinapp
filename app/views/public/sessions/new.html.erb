@@ -1,0 +1,42 @@
+<div class="container mt-5 mb-5">
+  <%= render "public/shared/error_messages", resource: resource %>
+  <div class="row pb-3">
+    <div class="col-md-5 text-center">
+      <h4 class="d-inline bg-secondary text-start text-white">　ログイン　</h4>
+    </div>
+  </div>
+
+  <div class="row pb-3">
+    <div class="col-md-5 text-center">
+      <p class="d-inline bg-secondary text-start text-white">　会員の方はコチラからログイン　</p>
+    </div>
+  </div>
+
+  <%= form_with model: @customer, url: customer_session_path do |f| %>
+    <div class="row pb-2">
+      <div class="col-2 text-right offset-1"><%= f.label :email %></div>
+      <div class="col-3 p-0"><%= f.email_field :email, autofocus: true, autocomplete: "email",size: "40x20" %></div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-2 text-right offset-1"><%= f.label :password %></div>
+      <div class="col-3 p-0"><%= f.password_field :password, autocomplete: "current-password",size: "40x20" %></div>
+    </div>
+    <div class="row pb-2">
+      <% if devise_mapping.rememberable? %>
+        <div class="col-2 text-right offset-1"><%= f.check_box :remember_me %></div>
+        <div class="col-3 p-0"><%= f.label :remember_me %></div>
+      <% end %>
+    </div>
+    <div class="row pb-2">
+      <div class="col-3  offset-4"><%= f.submit "ログイン", class: "btn btn-primary" %></div>
+    </div>
+    <% end %>
+    <div class="row pb-2">
+      <div class="col-4 offset-1">会員登録がお済みでない方</div>
+    </div>
+    <div class="row pb-2">
+      <div class="col-4 offset-1">
+        <%= render "public/shared/links" %>から新規登録を行ってください。
+      </div>
+    </div>
+</div>

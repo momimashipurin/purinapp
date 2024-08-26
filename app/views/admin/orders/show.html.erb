@@ -1,0 +1,88 @@
+<!--注文詳細画面(ステータス編集を兼ねる) 13P-->
+<div class="container">
+  <div class="row my-3">
+
+    <div>
+      <h3>注文履歴詳細</h3>
+    </div>
+    <table class="table table-borderless"><!--購入者に関する情報-->
+      <tr>
+        <td>購入者</td>
+        <td>
+          <%= link_to admin_customer_path(@order.customer.id) do %><!--氏名をクリック→会員詳細画面へ遷移-->
+            <%= @order.customer.last_name + @order.customer.first_name %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>注文日</td>
+        <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+      </tr>
+      <tr>
+        <td>配送先</td>
+        <td>〒<%= @order.postal_code %> <%= @order.address %><br>
+            <%= @order.name %>
+        </td>
+      </tr>
+      <tr>
+        <td>支払い方法</td>
+        <td><%= @order.payment_type %></td>
+      </tr>
+      <tr>
+        <td>注文ステータス</td>
+        <td>
+          <%= form_with model: @order, url: admin_order_path(@order), method: :patch do |f| %>
+            <%= f.select :status, Order.statuses.keys.map %>
+            <%= f.submit '更新', class:"btn btn-outline-success" %><!--更新ボタン-->
+          <% end %>
+        </td>
+      </tr>
+    </table>
+
+    <table class="table table-bordered"><!--購入した商品に関する情報-->
+      <thead>
+        <tr>
+          <th class="table-active">商品名</th>
+          <th class="table-active">単価（税込）</th>
+          <th class="table-active">数量</th>
+          <th class="table-active">小計</th>
+          <th class="table-active">製作ステータス</th>
+          <th></th>
+        </tr>
+      </thead>
+      <% @order.order_details.each do |order_detail| %>
+        <tbody>
+          <tr>
+            <td><%= order_detail.item.name %></td><!--OrderDetailモデルを通してItemモデルからname情報を取得-->
+            <td><%= calculate_price_including_tax(order_detail.item.price) %></td><!--ヘルパーメソッドapp/helpers/application_helper.rbから呼び出し-->
+            <td><%= order_detail.amount %></td>
+            <td><%= calculate_subtotal_order_detail(order_detail) %></td><!--ヘルパーメソッドapp/helpers/application_helper.rbから呼び出し-->
+            <%= form_with model: order_detail, url: admin_order_detail_path(order_detail), method: :patch do |f| %>
+              <td>
+                <%= f.select :making_status, OrderDetail.making_statuses.keys.map %>
+              </td>
+              <td>
+                <%= f.submit '更新', class:"btn btn-outline-success" %><!--更新ボタン-->
+              </td>
+            <% end %>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+    <table><!--注文にかかった金額-->
+      <tr>
+        <th>商品合計</th>
+        <td><%= calculate_total_order_detail(@order.order_details) %>円</td><!--ヘルパーメソッドapp/helpers/application_helper.rbから呼び出し-->
+      </tr>
+      <tr>
+        <th>送料</th>
+        <td><%= @order.shipping_cost %>円</td>
+      </tr>
+      <tr>
+        <th>請求額合計</th>
+        <th><%= calculate_sum_order_detail(@order) %>円</th><!--ヘルパーメソッドapp/helpers/application_helper.rbから呼び出し-->
+      </tr>
+    </table>
+
+  </div>
+</div>

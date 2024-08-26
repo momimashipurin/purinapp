@@ -1,0 +1,42 @@
+<%= stylesheet_link_tag 'public/homes' %>
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-2 pt-5">
+      <%= render 'admin/genres/side', genres: @genres %>
+    </div>
+    <div class="col-4 offset pt-5" style="text-align: center;">
+      <h1>WELCOME</h1>
+      　<h3 class= "top-text">ーようこそ、ながのCAKEへ</h3><br>
+        <h4 class= "top-text">
+          このサイトは、ケーキ販売のECサイトになります。<br><br>
+          会員でない方も商品の閲覧はできますが、<br><br>
+          購入には会員登録が必要になります。
+        </h4>
+    </div>
+    <div class="col-3 pt-5">
+     <img class="top-img" src="assets/30084502_s.jpg" style="height: 80%;">
+    </div>
+  </div>
+  
+  <div class="top-image row justify-content-center pt-3" style="background-color: whitesmoke;">
+    <h3><strong>新着商品</strong></h3>
+  </div>
+  <div class="top-image row justify-content-center pt-3" style="background-color: whitesmoke;">
+    <% @items.first(4).each do |item|%>
+      <div class="col-2  text-center">
+        <%= link_to item_path(item) do %>
+          <div class="new-image p-3"><%= image_tag item.get_item_image(200, 200), class: "card-img-top" %></div>
+          <p class="image-text" style="color: dimgray;"><%= item.name %></p>
+        <% end %>
+        <% if item.is_active == true%>
+          <p>¥<%= format_price(item.price) %></p>   <!--税抜価格表示用メソッド設定,pp/helpers/items_helper.rb-->
+        <% else %>
+          <p>販売停止中</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row justify-content-center pb-4" style="background-color: whitesmoke;">
+    <%= link_to " VIEW MORE ▶", items_path ,class: "btn btn-outline-secondary" %>
+  </div>
+</div>

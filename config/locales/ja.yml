@@ -1,0 +1,99 @@
+ja:
+  activerecord:
+    attributes:
+      order:
+        payment_type:
+          0: "クレジットカード"
+          1: "銀行振込"
+        status:
+          0: "入金待ち"
+          1: "入金確認"
+          2: "製作中"
+          3: "発送準備中"
+          4: "発送済み"
+      order_detail:
+        making_status:
+          0: "着手不可"
+          1: "制作待ち"
+          2: "制作中"
+  helpers:
+    order:
+      payment_types:
+        0: "クレジットカード"
+        1: "銀行振込"
+      statuses:
+        0: "入金待ち"
+        1: "入金確認"
+        2: "製作中"
+        3: "発送準備中"
+        4: "発送済み"
+    order_detail:
+        making_statuses:
+          0: "着手不可"
+          1: "制作待ち"
+          2: "制作中"
+
+ja:
+  activerecord:
+    attributes:
+      customer:
+        confirmation_sent_at: パスワード確認送信時刻
+        confirmation_token: パスワード確認用トークン
+        confirmed_at: パスワード確認時刻
+        created_at: 作成日
+        current_password: 現在のパスワード
+        current_sign_in_at: 現在のログイン時刻
+        current_sign_in_ip: 現在のログインIPアドレス
+        email: Eメール
+        encrypted_password: 暗号化パスワード
+        failed_attempts: 失敗したログイン試行回数
+        last_sign_in_at: 最終ログイン時刻
+        last_sign_in_ip: 最終ログインIPアドレス
+        locked_at: ロック時刻
+        password: パスワード
+        password_confirmation: パスワード（確認用）
+        remember_created_at: ログイン記憶時刻
+        remember_me: ログインを記憶する
+        reset_password_sent_at: パスワードリセット送信時刻
+        reset_password_token: パスワードリセット用トークン
+        sign_in_count: ログイン回数
+        unconfirmed_email: 未確認Eメール
+        unlock_token: ロック解除用トークン
+        updated_at: 更新日
+        first_name: 名前
+        last_name: 姓
+        first_name_kana: 名前（カナ）
+        last_name_kana: 姓（カナ）
+        postal_code: 郵便番号
+        address: 住所
+        telephone_number: 電話番号
+        is_active: 有効
+      admin:
+        confirmation_sent_at: パスワード確認送信時刻
+        confirmation_token: パスワード確認用トークン
+        confirmed_at: パスワード確認時刻
+        created_at: 作成日
+        current_password: 現在のパスワード
+        current_sign_in_at: 現在のログイン時刻
+        current_sign_in_ip: 現在のログインIPアドレス
+        email: Eメール
+        encrypted_password: 暗号化パスワード
+        failed_attempts: 失敗したログイン試行回数
+        last_sign_in_at: 最終ログイン時刻
+        last_sign_in_ip: 最終ログインIPアドレス
+        locked_at: ロック時刻
+        password: パスワード
+        password_confirmation: パスワード（確認用）
+        remember_created_at: ログイン記憶時刻
+        remember_me: ログインを記憶する
+        reset_password_sent_at: パスワードリセット送信時刻
+        reset_password_token: パスワードリセット用トークン
+        sign_in_count: ログイン回数
+        unconfirmed_email: 未確認Eメール
+        unlock_token: ロック解除用トークン
+        updated_at: 更新日
+
+    models:
+      customer: ユーザー
+      genre: ジャンル
+      item: 商品
